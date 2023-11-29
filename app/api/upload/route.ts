@@ -1,5 +1,7 @@
 import { writeFile } from "fs/promises";
+
 import { NextRequest, NextResponse } from "next/server";
+import { join } from "path";
 
 export async function POST(request: NextRequest) {
   const data = await request.formData();
@@ -14,7 +16,8 @@ export async function POST(request: NextRequest) {
 
   // С файловыми данными в буфере вы можете делать с ними все, что захотите.
   // Для этого мы просто запишем его в файловую систему в новом месте
-  const path = `/uploads/${file.name}`;
+  const path = join(`/tmp/${file.name}`);
+
   await writeFile(path, buffer);
   console.log(`Путь к файлу ${path}`);
 
